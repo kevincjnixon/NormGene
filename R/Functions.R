@@ -77,3 +77,4 @@ tpm<-function(mat, geneLength){
 
 fpkm2tpm<-function(mat){
   return(sweep(mat, 2, colSums(mat)/1000000, "/"))
+}
