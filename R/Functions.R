@@ -74,3 +74,6 @@ tpm<-function(mat, geneLength){
   mat <- sweep(mat, 2, scales, "/")
   return(mat)
 }
+
+fpkm2tpm<-function(mat){
+  return(sweep(mat, 2, colSums(mat)/1000000, "/"))
