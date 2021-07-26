@@ -4,12 +4,18 @@
 #'
 #' @param mat data frame count matrix with rows as genes and columns as samples
 #' @param geneLength data frame with two columns: GeneId corresponding to rownames(mat) and geneLength with the exon lengths of each gene
+#' @param libSize numeric vector of length ncol(mat) containing (in order) the library sizes for each sample in mat. Leave NULL to use colSums(mat).
 #' @return data frame with FPKM/RPKM normalized gene counts
 #' @export
 
-fpkm<-function(mat, geneLength){
+fpkm<-function(mat, geneLength, libSize=NULL){
   message("Calculating per million scale factors...")
-  scales<-colSums(mat)/1000000
+  scales<-c()
+  if(is.null(libSize)){
+    scales<-colSums(mat)/1000000
+  } else {
+    scales<-libSize/1000000
+  }
   message("Calculating Reads per million (RPM)...")
   #pb<-txtProgressBar(min=0, max=length(scales), style=3)
   #for(i in 1:length(scales)){
@@ -40,12 +46,18 @@ fpkm<-function(mat, geneLength){
 #'
 #' @param mat data frame count matrix with rows as genes and columns as samples
 #' @param geneLength data frame with two columns: GeneId corresponding to rownames(mat) and geneLength with the exon lengths of each gene
+#' @param libSize numeric vector of length ncol(mat) containing (in order) the library sizes for each sample in mat. Leave NULL to use colSums(mat).
 #' @return data frame with TPM normalized gene counts
 #' @export
 
-tpm<-function(mat, geneLength){
+tpm<-function(mat, geneLength, libSize=NULL){
   message("Calculting per million scale factors...")
-  scales<-colSums(mat)/1000000
+  scales<-c()
+  if(is.null(libSize)){
+    scales<-colSums(mat)/1000000
+  } else {
+    scales<-libSize/1000000
+  }
 
   mat<-mat[order(rownames(mat)),]
   geneLength<-geneLength[order(geneLength$GeneId),]
