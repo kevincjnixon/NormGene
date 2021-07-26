@@ -10,6 +10,8 @@ tpm(mat, geneLength)
 \item{mat}{data frame count matrix with rows as genes and columns as samples}
 
 \item{geneLength}{data frame with two columns: GeneId corresponding to rownames(mat) and geneLength with the exon lengths of each gene}
+  
+\item{libSize}{numeric vector of length ncol(mat) containing (in order) the library sizes for each sample in mat. Leave NULL to use colSums(mat).}
 }
 \value{
 data frame with TPM normalized gene counts
