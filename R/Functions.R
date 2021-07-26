@@ -87,8 +87,12 @@ tpm<-function(mat, geneLength, libSize=NULL){
   return(mat)
 }
 
-fpkm2tpm<-function(mat){
-  return(sweep(mat, 2, colSums(mat)/1000000, "/"))
+fpkm2tpm<-function(mat, libSize=NULL){
+  if(is.null(libSize)){
+    return(sweep(mat, 2, colSums(mat)/1000000, "/"))
+  } else {
+    return(sweep(mat, 2, libSize/1000000, "/"))
+  }
 }
 
 fpkm2raw<-function(mat, geneLength, libSize){
