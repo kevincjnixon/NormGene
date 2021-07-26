@@ -4,7 +4,7 @@
 \alias{fpkm}
 \title{Calculate FPKM/RPKM}
 \usage{
-fpkm(mat, geneLength)
+fpkm(mat, geneLength, libSize)
 }
 \arguments{
 \item{mat}{data frame count matrix with rows as genes and columns as samples}
