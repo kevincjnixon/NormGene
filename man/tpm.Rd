@@ -4,7 +4,7 @@
 \alias{tpm}
 \title{Calculate TPM}
 \usage{
-tpm(mat, geneLength)
+tpm(mat, geneLength, libSize)
 }
 \arguments{
 \item{mat}{data frame count matrix with rows as genes and columns as samples}
