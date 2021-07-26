@@ -90,3 +90,39 @@ tpm<-function(mat, geneLength, libSize=NULL){
 fpkm2tpm<-function(mat){
   return(sweep(mat, 2, colSums(mat)/1000000, "/"))
 }
+
+fpkm2raw<-function(mat, geneLength, libSize){
+  mat<-mat[order(rownames(mat)),]
+  geneLength<-geneLength[order(geneLength$GeneId),]
+  if(nrow(mat)>nrow(geneLength)){
+    mat<-mat[which(rownames(mat) %in% geneLength$GeneId),]
+  }
+  if(nrow(mat)<nrow(geneLength)){
+    geneLength<-geneLength[which(geneLength$GeneId %in% rownames(mat)),]
+  }
+  if(!all.equal(rownames(mat), geneLength$GeneId)){
+    stop("Check genes in count matrix and gene length match")
+  }
+  mat<-sweep((mat/1000), 1, geneLength$Length, "*")
+  scales<-libSize/1000000
+  mat<-sweep(mat, 2, scales, "*")
+  return(mat)
+}
+
+tpm2raw<-function(mat, geneLength, libSize){
+  mat<-mat[order(rownames(mat)),]
+  geneLength<-geneLength[order(geneLength$GeneId),]
+  if(nrow(mat)>nrow(geneLength)){
+    mat<-mat[which(rownames(mat) %in% geneLength$GeneId),]
+  }
+  if(nrow(mat)<nrow(geneLength)){
+    geneLength<-geneLength[which(geneLength$GeneId %in% rownames(mat)),]
+  }
+  if(!all.equal(rownames(mat), geneLength$GeneId)){
+    stop("Check genes in count matrix and gene length match")
+  }
+  scales<-libSize/1000000
+  mat<-sweep(mat,2, scales, "*")
+  mat<-sweep((mat/1000), 1, geneLength$Length, "*")
+  return(mat)
+}
