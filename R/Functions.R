@@ -87,6 +87,21 @@ tpm<-function(mat, geneLength, libSize=NULL){
   return(mat)
 }
 
+#' Calculate counts per million (cpm)
+#'
+#' Function to calculate CPM values for a count table
+#'
+#' @param mat data frame count matrix with rows as genes and columns as samples
+#' @return data frame with CPM normalized gene counts
+#' @export
+
+cpm<-function(mat){
+  #x<-x[-grep("_", rownames(x)),]
+  total<-colSums(mat)
+  cpm<-sweep(mat, 2, total, "/")*1000000
+  return(cpm)
+}
+
 fpkm2tpm<-function(mat, libSize=NULL){
   if(is.null(libSize)){
     return(sweep(mat, 2, colSums(mat)/1000000, "/"))
