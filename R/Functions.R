@@ -25,6 +25,12 @@ fpkm<-function(mat, geneLength, libSize=NULL){
   mat<-sweep(mat, 2, scales, "/")
   mat<-mat[order(rownames(mat)),]
   geneLength<-geneLength[order(geneLength$GeneId),]
+  if(nrow(mat)>nrow(geneLength)){
+    mat<-mat[which(rownames(mat) %in% geneLength$GeneId),]
+  }
+  if(nrow(mat)<nrow(geneLength)){
+    geneLength<-geneLength[which(geneLength$GeneId %in% rownames(mat)),]
+  }
   if(!all.equal(rownames(mat), geneLength$GeneId)){
     stop("Check genes in count matrix and gene length match")
   }
