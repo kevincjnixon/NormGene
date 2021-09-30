@@ -57,7 +57,6 @@ fpkm<-function(mat, geneLength, libSize=NULL){
 #' @export
 
 tpm<-function(mat, geneLength, libSize=NULL){
-  message("Calculting per million scale factors...")
   scales<-c()
   if(is.null(libSize)){
     scales<-colSums(mat)/1000000
@@ -83,6 +82,8 @@ tpm<-function(mat, geneLength, libSize=NULL){
   #  setTxtProgressBar(pb, i)
   #}
   mat <- 1000 * sweep(mat, 1, geneLength$Length, "/")
+   message("Calculting per million scale factors...")
+  scales<-colSums(mat)/1000000
   message("Calculating TPM...")
   #pb<-txtProgressBar(min=0, max=length(scales),style = 3)
   #for(i in 1:length(scales)){
